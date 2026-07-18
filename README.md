@@ -48,11 +48,13 @@ The core method lives in [src/ivf_connect.h](src/ivf_connect.h) (class
 ### 1. Dependencies
 
 * A C++20 compiler (GCC ≥ 10 or Clang ≥ 12)
-* CMake ≥ 3.9
+* CMake ≥ 3.24 — the vendored Faiss requires it (CGIF itself only needs 3.9). If
+  your system CMake is older, install a newer one, e.g. `pip install cmake`.
 * OpenMP
 * Boost (`program_options`)
 * BLAS + LAPACK (any implementation; MKL/OpenBLAS both work)
-* [Faiss](https://github.com/facebookresearch/faiss) — vendored as a submodule
+* [Faiss](https://github.com/facebookresearch/faiss) — vendored as a submodule,
+  pinned to the exact commit used in the paper's experiments.
 
 ### 2. Build Faiss (once)
 
