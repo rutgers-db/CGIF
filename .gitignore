@@ -1,0 +1,17 @@
+# Build output
+build/
+*.o
+*.a
+*.so
+
+# Index / data artifacts
+*.hnsw
+*.index
+*.ivf
+*.bin
+*.gt
+*.bitsets
+
+# Editor / OS
+.vscode/
+.DS_Store
