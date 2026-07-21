@@ -31,8 +31,7 @@ struct PathLogger {
 
     void
     path(const std::string& ver, const std::string& dataset, const size_t data_size) {
-        save_path = "/common/home/jl3288/Desktop/bitset-filter-anns/exp/log/path/raw_hnsw-" + ver + "-" + dataset +
-                    "-" + std::to_string(data_size) + ".csv";
+        save_path = "./logs/raw_hnsw-" + ver + "-" + dataset + "-" + std::to_string(data_size) + ".csv";
         std::cout << "Save result to :" << save_path << std::endl;
         file_stream.open(save_path, std::ios_base::app);
     }
@@ -431,8 +430,11 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
             }
             search_distance_computations += num_evalute;
             for (size_t j = 0; j < num_evalute; j++){
+
+#ifdef USE_SSE
                 _mm_prefetch(data_level0_memory_ + (*(to_evalute+ j + 1)) * size_data_per_element_ + offsetData_,
                              _MM_HINT_T0);  ////////////
+#endif
                     int candidate_id = to_evalute[j];
                     char* currObj1 = (getDataByInternalId(candidate_id));
                     dist_t dist = fstdistfunc_(data_point, currObj1, dist_func_param_);
@@ -572,9 +574,9 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
             for (size_t j = 1; j <= size; j++) {
                 int candidate_id = *(data + j);
 //                    if (candidate_id == 0) continue;
-// #ifdef USE_SSE
+#ifdef USE_SSE
                 // _mm_prefetch((char*)(visited_array + *(data + j + 1)), _MM_HINT_T0);
-// #endif
+#endif
                 if (!(visited_array[candidate_id] == visited_array_tag)) {
                     visited_array[candidate_id] = visited_array_tag;
                     to_evalute[num_evalute++] = candidate_id;
@@ -585,10 +587,10 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
             for (size_t j = 0; j < num_evalute; j++) {
                 int candidate_id = to_evalute[j];
 //                    if (candidate_id == 0) continue;
-// #ifdef USE_SSE
+#ifdef USE_SSE
                 _mm_prefetch(data_level0_memory_ + (*(data + j + 1)) * size_data_per_element_ + offsetData_,
                              _MM_HINT_T0);  ////////////
-// #endif
+#endif
                 
 
                     // skip unsatisfied node

@@ -70,11 +70,11 @@ target_link_libraries(UTIL PUBLIC OpenMP::OpenMP_CXX)
 
 # --- Executables ----------------------------------------------------------
 # build_ivf_index: build the IVF (coarse-quantizer) index consumed by CGIF.
-add_executable(build_ivf_index tests/build_ivf_index.cc)
+add_executable(build_ivf_index example/build_ivf_index.cc)
 target_link_libraries(build_ivf_index
     UTIL OpenMP::OpenMP_CXX libfaiss ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
 
 # cgif_search: build the CGIF graph (-build_only) and run filtered queries.
-add_executable(cgif_search tests/cgif_search.cc)
+add_executable(cgif_search example/cgif_search.cc)
 target_link_libraries(cgif_search
     UTIL OpenMP::OpenMP_CXX libfaiss ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})

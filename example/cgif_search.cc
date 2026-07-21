@@ -214,8 +214,8 @@ exp(string dataset, int data_size, string dataset_path, string method, string qu
                 // Save index to file (path can be overridden via -graph_path when build_only is set)
                 string save_to_path = !graph_path.empty()
                     ? graph_path
-                    : ("/data/local/repo/bitset-filtering-search/exp/graph/hnsw-graph-" + dataset + "-M0-" +
-                       std::to_string(index->maxM0_) + "-" + std::to_string(data_size) + ".hnsw");
+                    : ("./hnsw-graph-" + dataset + "-M0-" + std::to_string(index->maxM0_) + "-" +
+                       std::to_string(data_size) + ".hnsw");
                 cout << "Saving graph to: " << save_to_path << endl;
                 index->saveIndex(save_to_path);
                 if (build_only) {

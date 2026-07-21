@@ -31,7 +31,7 @@ clusters and a two-hop expansion to jump back to satisfying points.
 │   ├── base_index.h
 │   ├── twophase_bfs.h      # two-hop expansion used by CGIF
 │   └── common/             # reader.cc, utils.cc (compiled into the UTIL library)
-├── tests/                  # program entry points
+├── example/                # example runners (program entry points)
 │   ├── build_ivf_index.cc  # build the IVF index that CGIF consumes
 │   └── cgif_search.cc      # build the CGIF graph and run filtered queries
 └── third_party/

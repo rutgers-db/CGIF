@@ -136,7 +136,9 @@ class TwoPhaseBFS : public hnswlib::HierarchicalNSW<dist_t>, public baseindex::B
 
             for (size_t j = 1; j <= size; j++) {
                 int candidate_id = *(data + j);
+#ifdef USE_SSE
                 _mm_prefetch((char*)(visited_array + *(data + j + 1)), _MM_HINT_T0);
+#endif
                 if (!(visited_array[candidate_id] == visited_array_tag)) {
                     visited_array[candidate_id] = visited_array_tag;
 
@@ -155,9 +157,11 @@ class TwoPhaseBFS : public hnswlib::HierarchicalNSW<dist_t>, public baseindex::B
             this->search_distance_computations += num_score;
             // Note: 这里开始真正的距离计算
             for (size_t i = 0; i < num_score; i++) {
+#ifdef USE_SSE
                 _mm_prefetch(
                     this->data_level0_memory_ + to_score[i + 1] * this->size_data_per_element_ + this->offsetData_,
                     _MM_HINT_T0);
+#endif
                 char* currObj = this->getDataByInternalId(to_score[i]);
                 dist_t dist = this->fstdistfunc_(data_point, currObj, this->dist_func_param_);
 

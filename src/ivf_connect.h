@@ -316,7 +316,9 @@ class IVFConnectHNSW : public hnswlib::HierarchicalNSW<dist_t>, public baseindex
                         if (j < num_explore - 1)
                         {
                             // _mm_prefetch((char*)(visited_array + to_explore[j+1]), _MM_HINT_T0);
+#ifdef USE_SSE
                             _mm_prefetch((char*)(this->data_level0_memory_ + to_explore[j+1] * this->size_data_per_element_), _MM_HINT_T0);
+#endif
                         }
 
                         int* data_two_hop = (int*)this->get_linklist0(candidate_id);
@@ -443,7 +445,7 @@ class IVFConnectHNSW : public hnswlib::HierarchicalNSW<dist_t>, public baseindex
             this->search_distance_computations += num_score;
             // Note: 这里开始真正的距离计算
             for (size_t i = 0; i < num_score; i++) {
-// #ifdef USE_SSE
+#ifdef USE_SSE
                 // Prefetch next vector if available
                 // if (i + 4 < num_score) {
                 //     _mm_prefetch(this->getDataByInternalId(to_score[i + 4]), _MM_HINT_T0);
@@ -452,7 +454,7 @@ class IVFConnectHNSW : public hnswlib::HierarchicalNSW<dist_t>, public baseindex
                 _mm_prefetch(
                     this->data_level0_memory_ + to_score[i + 1] * this->size_data_per_element_ + this->offsetData_,
                     _MM_HINT_T0);
-// #endif
+#endif
                 char* currObj = this->getDataByInternalId(to_score[i]);
                 dist_t dist = this->fstdistfunc_(data_point, currObj, this->dist_func_param_);
 
@@ -668,7 +670,9 @@ class IVFConnectHNSW : public hnswlib::HierarchicalNSW<dist_t>, public baseindex
                         if (j < num_explore - 1)
                         {
                             // _mm_prefetch((char*)(visited_array + to_explore[j+1]), _MM_HINT_T0);
+#ifdef USE_SSE
                             _mm_prefetch((char*)(this->data_level0_memory_ + to_explore[j+1] * this->size_data_per_element_), _MM_HINT_T0);
+#endif
                         }
 
                         int* data_two_hop = (int*)this->get_linklist0(candidate_id);
@@ -735,9 +739,11 @@ class IVFConnectHNSW : public hnswlib::HierarchicalNSW<dist_t>, public baseindex
             this->search_distance_computations += num_score;
             // Note: 这里开始真正的距离计算
             for (size_t i = 0; i < num_score; i++) {
+#ifdef USE_SSE
                 _mm_prefetch(
                     this->data_level0_memory_ + to_score[i + 1] * this->size_data_per_element_ + this->offsetData_,
                     _MM_HINT_T0);
+#endif
                 char* currObj = this->getDataByInternalId(to_score[i]);
                 dist_t dist = this->fstdistfunc_(data_point, currObj, this->dist_func_param_);
 
@@ -760,9 +766,11 @@ class IVFConnectHNSW : public hnswlib::HierarchicalNSW<dist_t>, public baseindex
                 this->search_distance_computations += num_explore;
                 current_info.distance_computations_graph_base += num_explore;
                 for (size_t i = 0; i < num_explore; i++) {
+#ifdef USE_SSE
                     _mm_prefetch(
                         this->data_level0_memory_ + to_explore[i] * this->size_data_per_element_ + this->offsetData_,
                         _MM_HINT_T0);
+#endif
                     char* currObj = this->getDataByInternalId(to_explore[i]);
                     dist_t dist = this->fstdistfunc_(data_point, currObj, this->dist_func_param_);
 
