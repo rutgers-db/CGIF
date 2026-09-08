@@ -2,8 +2,8 @@
 
 Reference implementation of our paper:
 
-> **CGIF: Combining Proximity Graphs and Inverted Files for Efficient Filtered
-> Vector Search over Arbitrary Predicates**
+> **[CGIF: Combining Proximity Graphs and Inverted Files for Efficient Filtered
+> Vector Search over Arbitrary Predicates](https://doi.org/10.14778/3836663.3836716)**
 
 CGIF answers *filtered* approximate nearest-neighbor queries — find the `k`
 nearest vectors to a query among the subset of points that satisfy an arbitrary
@@ -251,4 +251,24 @@ Common flags (both programs):
 
 ## Citation
 
-If you use this code, please cite the CGIF paper.
+If you use this code, please cite the CGIF paper:
+
+Jiarui Luo, Chaoji Zuo, and Dong Deng. 2026. CGIF: Combining Proximity Graphs
+and Inverted Files for Efficient Filtered Vector Search over Arbitrary
+Predicates. *Proceedings of the VLDB Endowment* 19, 11 (2026), 3663–3675.
+[https://doi.org/10.14778/3836663.3836716](https://doi.org/10.14778/3836663.3836716)
+
+```bibtex
+@article{luo2026cgif,
+  author  = {Luo, Jiarui and Zuo, Chaoji and Deng, Dong},
+  title   = {{CGIF}: Combining Proximity Graphs and Inverted Files for Efficient
+             Filtered Vector Search over Arbitrary Predicates},
+  journal = {Proceedings of the VLDB Endowment},
+  volume  = {19},
+  number  = {11},
+  pages   = {3663--3675},
+  year    = {2026},
+  doi     = {10.14778/3836663.3836716},
+  url     = {https://doi.org/10.14778/3836663.3836716}
+}
+```
