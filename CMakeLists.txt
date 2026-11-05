@@ -78,3 +78,8 @@ target_link_libraries(build_ivf_index
 add_executable(cgif_search apps/cgif_search.cc)
 target_link_libraries(cgif_search
     UTIL OpenMP::OpenMP_CXX libfaiss ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
+
+# postfilter_hnsw: PostFilter-HNSW baseline (unfiltered top-ef, then filter);
+# used to reproduce Fig. 8 (see reproduce/fig8/).
+add_executable(postfilter_hnsw apps/postfilter_hnsw.cc)
+target_link_libraries(postfilter_hnsw UTIL OpenMP::OpenMP_CXX)

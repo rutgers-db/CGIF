@@ -33,7 +33,10 @@ clusters and a two-hop expansion to jump back to satisfying points.
 │   └── common/             # reader.cc, utils.cc (compiled into the UTIL library)
 ├── apps/                   # CLI applications (program entry points)
 │   ├── build_ivf_index.cc  # build the IVF index that CGIF consumes
-│   └── cgif_search.cc      # build the CGIF graph and run filtered queries
+│   ├── cgif_search.cc      # build the CGIF graph and run filtered queries
+│   └── postfilter_hnsw.cc  # PostFilter-HNSW baseline (Fig. 8)
+├── reproduce/
+│   └── fig8/               # scripts to reproduce Fig. 8 (predicate–embedding correlation)
 └── third_party/
     └── faiss/              # git submodule (used to train the IVF index)
 ```
@@ -85,6 +88,7 @@ Executables are written to `build/`:
 
 * `build/build_ivf_index`
 * `build/cgif_search`
+* `build/postfilter_hnsw` (PostFilter-HNSW baseline, used by `reproduce/fig8/`)
 
 Build options:
 
@@ -178,6 +182,12 @@ build/build_ivf_index \
 > how `cgif_search` recognizes it as a Faiss IVF index (rather than a raw
 > cluster-assignment `.npy`). To skip the built-in IVF search benchmark and only
 > write the index, prefix the command with `FAISS_IVF_BUILD_ONLY=1`.
+
+> **Paper settings.** The commands in this section are generic examples. The
+> paper uses `-num_clusters 1024` for Wiki and `4096` for every other dataset.
+> For **Deep**, the graph is additionally built with `-alpha 1.2`. All graphs
+> use `-M 32 -efConstruction 400`. A complete, scripted reproduction of
+> Fig. 8 is in [reproduce/fig8/](reproduce/fig8/).
 
 ### Step 2 — Build the CGIF graph
 
